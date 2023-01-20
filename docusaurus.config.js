@@ -9,14 +9,14 @@ const config = {
   title: 'COVID-19 Credentials with a Federated PKI',
   tagline: 'Trusted exchange of World Health Organization Digital Documentatin of COVID-10 Certificates.',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  baseUrl: '/cc-pki/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'who', // Usually your GitHub org/user name.
+  organizationName: 'dvci', // Usually your GitHub org/user name.
   projectName: 'cc-pki', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -76,7 +76,7 @@ const config = {
             items: [
               {
                 label: 'Guide',
-                to: '/docs/intro',
+                to: '/',
               },
             ],
           },
