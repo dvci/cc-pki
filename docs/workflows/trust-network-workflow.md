@@ -1,5 +1,6 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Trust Network Workflow
+# For Trust Network
+process for onboarding, link to trust list spec
