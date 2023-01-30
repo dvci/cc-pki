@@ -1,30 +1,30 @@
 # CQL Primer
 
-This document describes how to run business rules written in [Clinical Quality Language (CQL)](https://cql.hl7.org/) against vaccination credentials, answering questions about whether the credentials meet jurisdiction requirements.
+This document describes how to run business rules written in [Clinical Quality Language (CQL)](https://cql.hl7.org/) against credentials in order to validate that provided data meets jurisdictional business requirements.
 
 ## Overview
 
 The following high level steps, described in detail below, can be used to run CQL business rules against a vaccination record:
 
-* Start with a vaccination record in a supported format and a set of business rules written in CQL
-* Set up the [Matchbox](https://github.com/ahdis/matchbox) FHIR Server for converting records
-* Identify the correct StructureMap for converting the vaccination record into the DDCC CoreDataSet
-* Use Matchbox to convert the record to the DDCC CoreDataSet and then to the DDCC format
+* Start with a vaccination credential in a supported format and a set of business rules written in CQL
+* Set up the [Matchbox](https://github.com/ahdis/matchbox) FHIR Server for transforming credentials
+* Identify the correct StructureMap for converting the vaccination credential into the DDCC CoreDataSet logical model
+* Use Matchbox to transform the credential to a DDCC CoreDataSet logical model instance and then to the corresponding DDCC resource instance
 * Set up the CQL Translation Service for converting CQL into the Expression Logical Model (ELM) representation
 * Set up a [Node.js](https://nodejs.org/) project with appropriate CQL dependencies to provide an execution environment for the ELM representation
-* Run the business rules against the record
+* Run the business rules against the FHIR instance
 
-## Converting Vaccination Records to Common Format
+## Convert Vaccination Credentials to DDCC resource instance
 
-The process starts with converting the vaccination record to be evaluated into the appropriate format. For the examples used in this document we'll start with an example record in the SHC format, which you can download:
+The process starts with converting the vaccination credential to be evaluated into the DDCC FHIR model. For the examples used in this document we'll start with an example credential payload in the SHC format, which you can download:
 
 ```bash
-curl https://raw.githubusercontent.com/dvci/ddcc/who-88-structuremap-tests/structuremap-tests/fixtures/shc/example-00-a-fhirBundle.json --output example-00-a-fhirBundle.json
+curl https://raw.githubusercontent.com/dvci/ddcc/who-88-structuremap-tests/structuremap-tests/fixtures/shc/example-00-b-jws-payload-expanded.json --output example-00-b-jws-payload-expanded.json
 ```
 
 *TODO: Update the location of this example once merged*
 
-Records can be converted using the appropriate StructureMaps using the [Matchbox](https://github.com/ahdis/matchbox) FHIR Server.
+Credentials can be converted using the appropriate StructureMaps using the [Matchbox](https://github.com/ahdis/matchbox) FHIR Server.
 
 ### Running the Matchbox Docker Image
 
@@ -34,7 +34,7 @@ The Matchbox server can be run via its docker image.  The following command star
 docker run -d -p 8080:8080 --restart unless-stopped eu.gcr.io/fhir-ch/matchbox:v230
 ```
 
-Note that it's important to use the older v230 image in order to support StructureMap conversions. Running Matchbox in this fashion uses an in-memory data store rather than a backing database, so will not persist state across different container instantiations.
+Running Matchbox in this fashion uses an in-memory data store rather than a backing database, so will not persist state across different container instantiations.
 
 ### Loading IGs Into Matchbox
 
@@ -56,20 +56,20 @@ curl -X 'POST' \
   -d '{ "resourceType": "ImplementationGuide", "version": "0.6.2", "name": "hl7.fhir.uv.shc-vaccination", "packageId": "hl7.fhir.uv.shc-vaccination" }'
 ```
 
-### Converting the Vaccination Record Into DDCC Format
+### Converting the Vaccination Into DDCC FHIR resource
 
-This is a two step process. The first step is to convert the vaccination record into the DDCC CoreDataSet using the [appropriate StructureMap from the DDCC IG](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-structure-maps):
+This is a two step process. The first step is to convert the vaccination credential payload into the DDCC CoreDataSet logical model using the [appropriate StructureMap from the DDCC IG](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-structure-maps):
 
 ```bash
 curl -X 'POST' \
-'http://localhost:8080/matchbox/fhir/StructureMap/$transform?source=http://worldhealthorganization.github.io/ddcc/StructureMap/SHCToCoreDataSetVS' \
+'http://localhost:8080/matchbox/fhir/StructureMap/$transform?source=http://worldhealthorganization.github.io/ddcc/StructureMap/CertSHCtoCoreDataSet' \
 -H 'accept: application/fhir+json' \
 -H 'Content-Type: application/fhir+json' \
--d @example-00-a-fhirBundle.json \
+-d @example-00-b-jws-payload-expanded.json \
 -o example-00-a-DDCCCoreDataSet.json
 ```
 
-This should result in a new file containing the vaccine record information in the intermediary DDCC CoreDataSet format. The data in the intermediary format can then be converted to the DDCC format:
+This should result in a new file containing the vaccine information in the intermediary CoreDataSet format. The data in the intermediary format can then be converted to a DDCC FHIR resource instance:
 
 ```bash
 curl -X 'POST' \
@@ -84,7 +84,7 @@ curl -X 'POST' \
 
 The record is now ready to be evaluated against the business rules.
 
-## Running CQL Against Converted Vaccination Records
+## Running CQL Against Converted Vaccination Credentials
 
 Running CQL business rules against a record requires translating the CQL to the Expression Logical Model (ELM) representation and running the ELM in a CQL execution engine. For this document we'll start with one of the [examples from the DDCC IG](https://worldhealthorganization.github.io/ddcc/artifacts.html#knowledge-artifacts-libraries):
 
@@ -129,7 +129,7 @@ curl -X "POST" \
 --output DDCCPassELM.json
 ```
 
-### Running ELM Against Converted Vaccination Records
+### Running ELM Against Converted Vaccination Credentials
 
 The ELM translation of the CQL can be run against the vaccination record using the [JavaScript CQL Execution Framework library](https://github.com/cqframework/cql-execution) along with the [JavaScript CQL Execution FHIR Data Source](https://github.com/cqframework/cql-exec-fhir). This document describes how to set this up in a simple Node.js project. Node.js will first need to be installed if it is not already available. A new Node.js project with the needed CQL libraries can be set up using npm:
 
@@ -140,7 +140,7 @@ npm init --yes
 npm install cql-execution cql-exec-fhir
 ```
 
-Once the project is set up the ELM from the CQL business rules can be evaluated against the vaccination record that was converted to the DDCC format. The following example JavaScript code can serve as a starting point:
+Once the project is set up the ELM from the CQL business rules can be evaluated against the vaccination credential that was converted to the DDCC resource instance. The following example JavaScript code can serve as a starting point:
 
 ```js
 // This example loads an ELM file and vaccination records and evaluates
@@ -174,7 +174,7 @@ const results = executor.exec(patientSource);
 console.log(results);
 ```
 
-This code can be run to execute the business rules against the record using the following command:
+This code can be run to execute the business rules against the resource using the following command:
 
 ```bash
 node main.js DDCCPassELM.json example-00-a-DDCC.json
