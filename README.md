@@ -2,6 +2,9 @@
 
 ### Getting Started
 
+  `npm install`
+    Installs docusaurus.
+
   `npm start`
     Starts the development server.
 
