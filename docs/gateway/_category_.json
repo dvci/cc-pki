@@ -1,5 +1,5 @@
 {
-  "label": "Gateway",
+  "label": "Trust Gateway",
   "position": 5,
   "link": {
     "type": "generated-index",
