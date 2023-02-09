@@ -18,7 +18,17 @@ This credential uses [SNOMED](http://snomed.info/sct) for documenting test resul
 
 
 ### Concept Maps
-The Concept Maps can be accessed here (insert link).
+The Concept Maps can be accessed here (link TBD).
+
+The Concept Maps included in the Implementation Guide are:
+- Vaccinations
+    - CVX to ICD 11
+    - EU-VMP to ICD 11
+    - SNOMED to ICD 11
+- Test Results
+    - VDS-NC-r to SNOMED
+- Test Types
+    - VDS-NC-tc to LOINC
 
 
 
