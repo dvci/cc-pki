@@ -1,6 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
+
+# Trust List Specification
 
 ## Introduction
 In order for data to be exchanged between different COVID-19 credential standards, there needs to be a means of unifying the trust lists of each respective specification. A Global Trust Network has the opportunity to bring existing and new local and regional trust networks together in a way that respects their designs and sovereignty while contributing to real interoperability among all of them.
