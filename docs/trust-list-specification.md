@@ -11,13 +11,13 @@ In order for data to be exchanged between different COVID-19 credential standard
 Finding alignment between existing trust list formats is the key to real interoperability. This can be done by defining a common trust list format to assemble and share public key infrastructure (PKI) for all COVID-19 credential specifications used by existing trust networks.
 
 ## Requirements
-A common trust list specification sbould define the lowest common denominator format that can interoperate between all specifications in the trust list. This includes considering the minimum security requirements that satisfy each of the specifications. Creation of the trust list specification will require consideration for how to define a structure that can support the minimal required features from the included specifications. To ennumerate the requirements, a trust list specification format must include the following tenets:
-1) SHALL be convertible from each existing trust network's formats.
-2) SHALL describe a key-to-trust-anchor path for all specifications.
-3) SHALL be cacheable
-4) SHALL be mergeable (trust list operators can integrate each other's entries)
-5) SHALL be integratable with GCCN's metadata format
-6) SHALL be usable by all stakeholders required to verify health credentials in their operations
+A common trust list specification should define the lowest common denominator format that can interoperate between all specifications in the trust list. This includes considering the minimum security requirements that satisfy each of the specifications. Creation of the trust list specification will require consideration for how to define a structure that can support the minimal required features from the included specifications. To ennumerate the requirements, a trust list specification format must include the following tenets:
+1. SHALL be convertible from each existing trust network's formats
+2. SHALL describe a key-to-trust-anchor path for all specifications
+3. SHALL be cacheable
+4. SHALL be mergeable (trust list operators can integrate each other's entries)
+5. SHALL be integratable with GCCN's metadata format
+6. SHALL be usable by all stakeholders required to verify health credentials in their operations
 
 ## Trust List Content
 A trust list specification may potentially include the following content:
