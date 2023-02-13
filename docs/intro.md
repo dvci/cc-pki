@@ -5,13 +5,17 @@ slug: /
 
 # Introduction
 
-This guide provides documentation to assist in understanding, testing and the use of vaccine credentials with a federated Public Key Infrastructure (PKI).
+In response to COVID-19, Governments and organizations across the world have developed and adopted standards and technologies to create, present, and verify digital vaccination credentials. However, a global technical framework to enable convenient use and interoperability of these credentials between systems – while also allowing domestic autonomy over their use – does not exist and is critically needed.
+
+This guide describes establishment of a federated mechanism between existing trust networks to allow exchange of trusted health data, including COVID-19 certificates, routine immunization data, and home-based records consistent with International Patient Summary standards. Components this global health architecture include:
+
+* federated public key infrastructure solution which could be used to verify health credentials in a virtual environment
+* means of harmonizing global health protocol standards and establishing a system for recognition of digital certificates at point of entry
+* COVID-19 specific data models, vocabulary, and transformations to enable mutual recognition between existing credential standards 
 
 ## Background & Purpose
 
-In response to COVID-19, governments and organizations across the world have
-developed and adopted standards and technologies to create, present, and verify
-digital vaccination credentials.
+
 
 This guide details how to utilize a global
 technical framework to allow interoperability of these credentials between
