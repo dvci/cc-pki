@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # CQL Primer
 
 This document describes how to run business rules written in [Clinical Quality Language (CQL)](https://cql.hl7.org/) against credentials in order to validate that provided data meets jurisdictional business requirements.
