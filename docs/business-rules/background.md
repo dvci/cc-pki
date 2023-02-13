@@ -22,3 +22,6 @@ logic that can be evaluated against clinical knowledge, including health credent
 against clinical knowledge first requires translating the CQL into its canonical representation, the
 Expression Logical Model (ELM). The resulting ELM exression of the CQL can be run against a DDCC
 health credential using a CQL execution engine.
+
+More detail here on the end to end process/steps - from conceptualization of the rules to authoring to packaging to distribution to execution.
+Need to list/describe every step from someone at a ministry of health in country A deciding to check for negative COVID test within last 72 hrs at the border to a traveler in country B downloading a universal verifier app and running country A's entry rules against their own SMART Health Card.

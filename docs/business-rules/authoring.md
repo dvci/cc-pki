@@ -8,6 +8,16 @@ CQL expresses the logic of business rules in a way that is both human readable a
 order for the logic to be computed against health credentials in a scalable and standardized way
 the logic must be written against a common standard format for representing the credentials.
 
+## Preqrequisites for authoring business rules using CQL
+FHIR models and value sets
+IDE (vscode extension)
+
+## CQL DSL
+CQL grammar links, llinks to existing repos with CQL examples for reference
+
+## Packaging CQL for distribution
+FHIR library
+
 The [DDCC Implementation Guide](https://worldhealthorganization.github.io/ddcc/) defines both the
 common standard representation against which the CQL can be written and the mappings for translating
 various source formats into the common representation. The source formats are
@@ -20,32 +30,6 @@ various source formats into the common representation. The source formats are
 The common representation that these source health credential formats need to be transformed to
 before evaluating CQL business rules is the
 [World Health Organization Digital Documentation of COVID-19 Certificates (WHO DDCC)](https://worldhealthorganization.github.io/ddcc/content_profiles.html)
-
-## Structure Maps and Concept Maps
-
-Translating across formats requires correctly mapping both the structure of the credential and the
-clinical concepts expressed within that structure.
-
-Mapping the structure requires pulling data from the source format and expressing it in the
-destination format. For example, the name of the credential holder has different representations in
-each of the formats and needs to be correctly mapped to the destination format. Mapping the
-structure of the credential is accomplished using
-[FHIR StructureMaps](https://fhir-ru.github.io/structuremap.html).
-StructureMaps define rules that describe how two different structures are related to each other and
-provides the logic that defines how instances can be converted from one structure to the other in an
-automated fashion.
-
-In addition to mapping the overall structure, clinical concepts need to be correctly mapped. For
-example, one format may use LOINC to represent the type of a medical test while another format may
-use SNOMED CT. Mapping the clinical concepts from one format to another is accomplished using
-[FHIR ConceptMaps](https://fhir-ru.github.io/conceptmap.html).
-A ConceptMap defines a mapping from a set of concepts in one code system to concepts in another code
-system.
-
-References:
-
-* [DDCC IG Structure Maps](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-structure-maps)
-* [DDCC IG Concept Maps](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-concept-maps)
 
 ## FHIR Representation
 
