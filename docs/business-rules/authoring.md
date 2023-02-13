@@ -95,3 +95,4 @@ CQL authoring resources:
 
 * [CQL Introduction](https://cql.hl7.org/01-introduction.html)
 * [CQL Authoring Guide](https://cql.hl7.org/02-authorsguide.html)
+* [CRMI IG CQL Guidelines](https://build.fhir.org/ig/HL7/crmi-ig/branches/master/using-cql.html)
