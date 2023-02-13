@@ -4,17 +4,17 @@ sidebar_position: 3
 
 # CQL Execution
 
-The workflow for executing CQL against vaccine credentials includes the following:
+The workflow for executing CQL against health credentials includes the following:
 
 * Author
     * Write business rules using CQL to express health policies in computable fashion
     * Publishes the CQL rules as FHIR Library resources with a trust health service
     * Optionally digitally sign the business rule using a FHIR Provenance resource and provide public key to PKD
 * Verifier
-    * Perform Federated Verification workflow on vaccine credential
+    * Perform Federated Verification workflow on health credential
     * Identify business rule to be executed for use case
     * Optionally retrieve public key signing business rule from PKD and verify authenticity of rule
-    * Map source vaccine credential to FHIR resources using StructureMaps
+    * Map source health credential to FHIR resources using StructureMaps
     * Execute CQL business rule on FHIR representation of credential
 
 *QUESTION: DO WE WANT DIAGRAMS?*

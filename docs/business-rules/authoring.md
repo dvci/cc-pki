@@ -5,7 +5,7 @@ sidebar_position: 2
 # CQL Authoring
 
 CQL expresses the logic of business rules in a way that is both human readable and computable. In
-order for the logic to be computed against vaccine credentials in a scalable and standardized way
+order for the logic to be computed against health credentials in a scalable and standardized way
 the logic must be written against a common standard format for representing the credentials.
 
 The [DDCC Implementation Guide](https://worldhealthorganization.github.io/ddcc/) defines both the
@@ -17,8 +17,8 @@ various source formats into the common representation. The source formats are
 * [International Civil Aviation Organization Visible Digital Seals (ICAO VDS-NC)](https://www.icao.int/Security/FAL/TRIP/PublishingImages/Pages/Publications/Guidelines%20-%20VDS%20for%20Travel-Related%20Public%20Health%20Proofs.pdf)
 * [Digital Infrastructure for Verifiable Open Credentialing (DIVOC)](https://divoc.egov.org.in/)
 
-The common representation that these source vaccine credential formats need to be transformed to before evaluating CQL
-business rules is the
+The common representation that these source health credential formats need to be transformed to
+before evaluating CQL business rules is the
 [World Health Organization Digital Documentation of COVID-19 Certificates (WHO DDCC)](https://worldhealthorganization.github.io/ddcc/content_profiles.html)
 
 ## Structure Maps and Concept Maps
@@ -49,15 +49,15 @@ References:
 
 ## FHIR Representation
 
-The WHO DDCC IG specifies vaccine credentials using the FHIR standard, and the CQL for expressing
+The WHO DDCC IG specifies health credentials using the FHIR standard, and the CQL for expressing
 business rules against credentials operates on the FHIR resources that make up a credential. The
-DDCC vaccine credential document Bundle contains a minimal
+DDCC health credential document Bundle contains a minimal
 [Patient](https://worldhealthorganization.github.io/ddcc/StructureDefinition-DDCCPatient.html)
 resource along with appropriate linked
 [Immunization](https://worldhealthorganization.github.io/ddcc/StructureDefinition-DDCCImmunization.html)
 resources representing information on vaccines administered and
 [Observation](https://worldhealthorganization.github.io/ddcc/StructureDefinition-DDCCObservation.html)
-resources representing information on testing events.
+resources representing test results.
 
 *QUESTIONS: DO WE WANT DIAGRAMS? DO WE WANT EXAMPLE FHIR CONTENT?*
 
