@@ -36,7 +36,7 @@ provides the logic that defines how instances can be converted from one structur
 automated fashion.
 
 In addition to mapping the overall structure, clinical concepts need to be correctly mapped. For
-example, one format may use LOINC to represent the type of COVID-19 test while another format may
+example, one format may use LOINC to represent the type of a medical test while another format may
 use SNOMED CT. Mapping the clinical concepts from one format to another is accomplished using
 [FHIR ConceptMaps](https://fhir-ru.github.io/conceptmap.html).
 A ConceptMap defines a mapping from a set of concepts in one code system to concepts in another code
