@@ -17,8 +17,8 @@ of destination jurisdictions against a variety of credential formats.
 
 The WHO DDCC effort uses [Clinical Quality Language (CQL)](https://cql.hl7.org/), a standard for
 health domain business rules, as the computable representation of business rules to apply against
-vaccine credentials in its Global Trust Network. CQL defines a representation for logic that can be
-evaluated against clinical knowledge, including vaccine credentials. Running CQL against clinical
-knowledge first requires translating the CQL into its canonical representation, the Expression
-Logical Model (ELM). The resulting ELM exression of the CLQ can be run against a DDCC vaccine
-credential using a CQL execution engine.
+vaccine credentials in its Global Trust Network. CQL defines a human readable representation of
+logic that can be evaluated against clinical knowledge, including vaccine credentials. Running CQL
+against clinical knowledge first requires translating the CQL into its canonical representation, the
+Expression Logical Model (ELM). The resulting ELM exression of the CLQ can be run against a DDCC
+vaccine credential using a CQL execution engine.
