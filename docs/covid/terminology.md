@@ -111,9 +111,9 @@ Terminology names in `id`s should be shortened as much as possible while still b
 
 #### CodeSystems
 
-Code systems are included to allow for expansion. Use the same naming scheme as for ValueSets above but replace `ValueSet` with `CodeSystem` in the `name`.
+Code systems are included to allow for expansion. 
 
-FSH filenames should be `tx-cs-{id}.fsh`. Each CodeSystem should be in a separate file.
+FSH filenames should be `tx-cs-{alias}.fsh`, like `tx-cs-snomed.fsh`. Each CodeSystem should be in a separate file. In cases where the IG already has a code system defined, the codes should be merged into the existing system rather than placed in a separate file.
 
 #### ConceptMaps
 
