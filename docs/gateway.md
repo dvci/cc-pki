@@ -9,7 +9,7 @@ sidebar_position: 5
 The Digital Documentation COVID-19 Certificate Gateway (DDCCG) is an extended
 version of the [European Union Digital COVID Certificate Gateway (EUDCCG)](https://ec.europa.eu/health/sites/default/files/ehealth/docs/digital-green-certificates_v2_en.pdf),
 which has enhanced functionality allowing for interoperability between
-multiple gateways and supports of the DDCC specification.
+multiple gateways in support of the DDCC specification.
 
 While the DDCCG is designed to support the DDCC specification, 
 it also supports various existing digital COVID certificates
