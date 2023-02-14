@@ -5,48 +5,33 @@ sidebar_position: 4
 # Trust List Specification
 
 ## Introduction
-In order for data to be exchanged between different COVID-19 credential standards, there needs to be a means of unifying the trust lists of each respective specification. A Global Trust Network has the opportunity to bring existing and new local and regional trust networks together in a way that respects their designs and sovereignty while contributing to real interoperability among all of them.
+Universal verifier applications that support different credential standards are complicated by wide variability in format of the credential payloads, signatures, key formats, and key distribution methods. Public keys formats include x509 certificates, JSON Web Key Sets (JWKS), and DID documents. Signing key distribution methods include API gateways, hosted by issuer at a pre-defined URL, embedded in certificates, and by blockchain based resolution. Establishing root of trust by trust anchor or distributing trust list has been accomplished by API gateway, hosted URL, private dissemination and other bilateral sharing agreements.
 
-## Objective and Goals
-Finding alignment between existing trust list formats is the key to real interoperability. This can be done by defining a common trust list format to assemble and share public key infrastructure (PKI) for all COVID-19 credential specifications used by existing trust networks.
+While some variability is expected in an approach that preserves sovereignty, there are opportunities for alignment in key format and distribution for the sake of fostering interoperability. With that goal, we provide a unifying trust list format to assemble and share public key infrastructure for all credential specifications used by existing trust networks. Importantly, this format does not enforce a particular policy framework for members of the trust network.
 
 ## Requirements
-A common trust list specification should define the lowest common denominator format that can interoperate between all specifications in the trust list. This includes considering the minimum security requirements that satisfy each of the specifications. Creation of the trust list specification will require consideration for how to define a structure that can support the minimal required features from the included specifications. To enumerate the requirements, a trust list specification format must include the following tenets:
+The common trust list specification defines the lowest common denominator format that can interoperate between all included specifications and can support the minimal required features from each specification. This includes considering the minimum security requirements that satisfy each of the specifications. It was designed taking into account the following tenets:
 1. SHALL be convertible from each existing trust network's formats
 2. SHALL describe a key-to-trust-anchor path for all specifications
 3. SHALL be cacheable
 4. SHALL be mergeable (trust list operators can integrate each other's entries)
-5. SHALL be integrable with GCCN's metadata format
-6. SHALL be usable by all stakeholders required to verify health credentials in their operations
+5. SHALL be usable by all stakeholders required to verify health credentials in their operations
 
-## Trust List Content
-A trust list specification may potentially include the following content:
-- Issuer IDs or key IDs
-- Public key information
-- Certificate chain (e.g. effective periods and country signing certification authorities)
-- Approved key usage information
-- Revocation Information / Lists
-- Machine-actionable services (e.g. renewal link, more information, status checks, etc.)
-- Human-actionable services (e.g. renewal link, more information, status checks, etc.)
-- Information on the issuer's or the jurisdiction policies and compliance
-- Information for the user interface of the application
+## DID Document
+The unified format is based on the [Decentralized Identifiers (DIDs) v1.0](https://www.w3.org/TR/did-core/) specification. DIDs are globally unique identifier in the form of URIs. The URI scheme includes a method name which corresponds to a standard method by which a DID Document can be resolved. This DID Document is a structured JSON-LD which captures each existing public key (regardless of X.509 or JWK format used) by the members of a trust network in a common format. It allows additional metadata (such as intended purpose and key identifiers) to be added to existing keys with changing the underlying keys themselves​. It provides means to publish and cryptographically sign a master lists of keys recognized used by a trust network.
 
-Inclusion of the features above should depend on what minimal features are needed to satisfy technical and security requirements of all included specifications. There are benefits to limiting the content scope of the trust list specification, including:
-- Faster downloading
-- Faster parsing
-- Less whole-list updates for simple changes in each category
-- Less duplication of records within itself (e.g., certificate chains can be the same for multiple keys)
-- Avoid transfer of controlling power from the Issuer to the Trust List Provider
+The unified format DID method selected is did:web, a method to retrieve DID Documents via existing web (https) infrastructure​. ​The did:web identifiers have the form `<DOMAIN NAME>:<PATH COMPONENT 1>:...: <PATH COMPONENT N>`​. Resolution is accomplished by https GET against the URL which is formed from this identifier by​ `https://​DOMAIN NAME/PATH COMPONENT 1/.../PATH COMPONENT N/did.json`. For example did:web:example.com:my:path would resolve a DID Document from the URL `https://example.com/my/path/did.json`​. Additional did methods may be supported in the future.
 
-There are clear advantages to limiting the scope of a trust list specification's features, however it is worth noting that smaller scopes defer the security and privacy of the added information to another standard.
+The DID Document itself should have:​
+* an ‘id’ field which is the DID itself and represents the DID Subject, in this case the trust list
+* a list of public keys within the ‘verificationMethod’ field​
+* an optional signature via a ‘proof’ field​
 
-## Potential Specification Format for Global Trust Network: DID Document
-The [Decentralized Identifier (DID) Document](https://www.w3.org/TR/did-core/) format shows promise as a lead contender for the Global Trust Network Trust List specification. The same format accepts embed and reference keys as well as signed, double signed and unsigned payloads. It can be stored in the web or other stacks, such as Blockchains and decentralized file systems like InterPlanetray File System (IPFS). DID Documents will include keys as JWKs and x509 certificates can be added into those records.
+The verificationMethod array represents the individual signing keys associated with issuers within the entity represented by the DID Subject, an includes:
+* an `id` field which is a DID URL composed of the DID for this DID Document and key ID as ​DID#key
+* controller of the public key, which can be current document (in case of publishing a key by a trust network member) or the source of the public key in case of an aggregator 
+* the public key JWK, including the key's x509 and chain of trust to Root Certificate Authority​
 
-A DID Document supports:
-- Issuer IDs or key IDs (e.g. list of approved URLs or DIDs)
-- Public key information
-- Certificate chain (e.g. effective periods and country signing certification authorities)
-- Approved key usage information (e.g. EU's DCC OIDs inside certificates)
+The DID Document itself can be signed with addition of a ‘proof’ block containing signature details and key used for verification.
 
-For more information regarding the benefits of a DID Document format for a Trust List specification, see [WHO DDCC Trust List Specification documentation](https://github.com/WorldHealthOrganization/ddcc-trust/blob/main/TrustListSpecification.md#leading-contender-did-document). For an example of a signed DID Document, see [Appendix A](https://github.com/WorldHealthOrganization/ddcc-trust/blob/main/TrustListSpecification.md#appendix-a-signed-did-document-for-x509-enabled-trust-lists-of-leaf-keys) of the documentation.
+For more information regarding the DID Document format for a Trust List specification, see [WHO DDCC Trust List Specification documentation](https://github.com/WorldHealthOrganization/ddcc-trust/blob/main/TrustListSpecification.md#leading-contender-did-document). For an example of a signed DID Document, see [Appendix A](https://github.com/WorldHealthOrganization/ddcc-trust/blob/main/TrustListSpecification.md#appendix-a-signed-did-document-for-x509-enabled-trust-lists-of-leaf-keys) of the documentation.
