@@ -9,10 +9,9 @@ sidebar_position: 1
 Acots, transactions, and workflows are defined using the [Integrating the
 Healthcare Enterprise (IHE) definitions](https://profiles.ihe.net/GeneralIntro/ch-3.html).
 
-### Actors
+## Actors
 
-Actors produce, manage, or act on health information. Actors relevant to the
-WHO DDCC Federated Trust Network include:
+Actors produce, manage, or act on health information. Actors relevant to a Federated Trust Network include:
 
 - **Credential Issuers:** Credential Issuers generate digital vaccine 
 certificates which may be issued to individuals. Issuers may generate 
@@ -30,10 +29,10 @@ aggregated across one or more Local PKDs.
 verifying cryptographic signatures of vaccine credentials by using public
 keys. Public keys may be retrieved from either a Local or Federated PKD.
 
-### Transactions
+## Transactions
 
 Transactions define how actors exchange information between one another.
-Transactions relevant to the WHO DDCC Federated Trust Network include:
+Transactions relevant to a Federated Trust Network include:
 
 - **Credential Issuance:** Credential Issuers may provide a vaccine
 certificate to a Credential Holder.
@@ -42,18 +41,18 @@ in another PKD.
 - **Public Key Retrieval:** An actor, including PKDs or Verification Applications,
 may retrieve a key from a PKD.
 
-### Workflows
+## Workflows
 
 A workflow is a set of interactions among multiple actors.
 
-#### Credential Issuance Workflow
+### Credential Issuance
 
 Credential Issuers provide vaccine certificates to individuals normally
-using their local format.
+using their local format. They are responsible for verifying the identity of the individual against an ID document and the eligibility of the individual for the service. 
 
 ![Issuance Workflow Diagram](/img/issuance.svg)
 
-#### Federated PKD Aggregation
+### Federated PKD Aggregation
 
 Keys from Local PKDs are aggregated in a federated PKD for use by verification
 applications.ssss
@@ -85,9 +84,9 @@ The DID Format expected is defined in the
 
 ![Aggregation Workflow Diagram](/img/aggregation.svg)
 
-#### Verification
+### Verification
 
-Verification Applications can verify vaccine credentials using keys retrieved from
+Verifications can cryptographically verify health credentials using keys retrieved from
 the Federated PKD.
 
 Steps include:
@@ -95,7 +94,16 @@ Steps include:
 the master list (one-time).
 - Retrieving the master list from the Federated PKD and verifying the signature (periodic).
 - Deserializing the vaccine credential 2D bar-code to determine the key id.
-- Retreiving the public key associated with the key id from the master list, or using a cached key.
-- Verifying the cryptographic signature within the 2D barcode.
+- Retrieving the public key associated with the key id from the master list, or using a cached key.
+- Verifying 
+  - the cryptographic signature within the 2D barcode.
+  - the authority of the issuer to issue this type of certificate with this key.
+  - the expiration date of the keys.
+  - the expiration date from the certificate.
+  - the certificate is not part of revocation lists available.
+  - the issuing key is still present on a trust list by the issuing authority (not revoked).
+  - the issuing key is still present on the trust list of the verification authority.
+  - the name/identity on the certificate matches an ID document.
+  - the business rules of the verification jurisdiction pass for the certificate.  
 
 ![Verification Workflow Diagram](/img/verification.svg)
