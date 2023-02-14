@@ -109,6 +109,8 @@ The goal is that `name` should clearly identify both the resource type and conte
 
 Terminology names in `id`s should be shortened as much as possible while still being readable. For example, SNOEMD CT becomes `snomed`; ICD-11 becomes `icd11`.
 
+"COVID-19" should appear in `id`/`name`/`title` when using a COVID-specific subset of a broader terminology system. For internally defined code systems (like those used by DIVOC and ICAO), "COVID-19" should _not_ appear in case those specifications are expanded in the future (otherwise it would be necessary to create a 2nd value set, which would be problematic for terminology bindings in the logical model).
+
 #### CodeSystems
 
 Code systems are included to allow for expansion. 
