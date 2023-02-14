@@ -28,6 +28,7 @@ aggregated across one or more Local PKDs.
 - **Verification Application:** Verification Applications are capable of
 verifying cryptographic signatures of vaccine credentials by using public
 keys. Public keys may be retrieved from either a Local or Federated PKD.
+- **Business Rules Library:** trusted service, provided by a node within a trust network, to share business rules using Clinical Quality Language (CQL) specification
 
 ## Transactions
 
@@ -50,12 +51,24 @@ A workflow is a set of interactions among multiple actors.
 Credential Issuers provide vaccine certificates to individuals normally
 using their local format. They are responsible for verifying the identity of the individual against an ID document and the eligibility of the individual for the service. 
 
+**ACTORS:**
+* Credential Issuers
+* Credential Holders
+
+**TRANSACTION:** Issue health document
+
 ![Issuance Workflow Diagram](/img/issuance.svg)
 
 ### Federated PKD Aggregation
 
 Keys from Local PKDs are aggregated in a federated PKD for use by verification
-applications.ssss
+applications.
+
+**ACTORS:**
+* Local PKD – acts as a node within a trust network​
+* Aggregating/Federated PKD – trusted aggregation of public keys and trusted services from nodes
+
+**TRANSACTION:** Mirror Local PKD
 
 Steps include:
 - Local PKD onboarding (one-time). Onboarding may include evaluating Local PKD
@@ -79,17 +92,21 @@ Federated PKDs are expected to:
 - Can share list of public keys in the following format:
   - Decentralized Identifiers (DID)
 
-The DID Format expected is defined in the
-[WHO Global Trust Network: Trust List Specification](https://github.com/WorldHealthOrganization/ddcc-trust/blob/main/TrustListSpecification.md)
-
 ![Aggregation Workflow Diagram](/img/aggregation.svg)
 
-### Verification
+### Federated Verification
 
 Verifications can cryptographically verify health credentials using keys retrieved from
 the Federated PKD.
 
-Steps include:
+**ACTORS:**
+* Universal Verification Application –  verifies health documents using Public Key Infrastructure (PKI)​
+* Local PKD – acts as a node within a trust network​
+* Aggregating/Federated PKD – trusted aggregation of public keys and trusted services from nodes
+
+**TRANSACTION:** Request PKD
+
+Universal Verification Application steps:
 - Onboarding a Federated PKD by retrieving the signing key used to sign
 the master list (one-time).
 - Retrieving the master list from the Federated PKD and verifying the signature (periodic).
@@ -107,3 +124,36 @@ the master list (one-time).
   - the business rules of the verification jurisdiction pass for the certificate.  
 
 ![Verification Workflow Diagram](/img/verification.svg)
+
+### Dynamic Business Rule Validation​
+
+Validate one or more verified COVID credential against a dynamic business rule.​
+
+**ACTORS:**
+* Universal Verification Application – executes business rules against verified health documents​
+* Business Rules Library – trusted service, provided by a node within a trust network, to share business rules using Clinical Quality Language (CQL) specification​
+
+**PRE-CONDITION:** Verification Application has passed Verification Workflow​
+
+**TRANSACTION:** Request Business Rule Updates
+
+Business Rules Library:​
+- Expresses health policies (e.g. “Needs full course of vaccine”) as executable business​
+rule using the Clinical Quality Language (CQL)​
+- Publishes business rules as FHIR Library resources with a trust health service​
+Optionally:​
+  - Provide digital signagure of business rule as FHIR Provenance resource​
+  - Provides public key to PKD​
+
+**TRANSACTION:** Execute Business Rule​  
+
+Universal Verification App:​
+- Pre-Condition: Perform Federated Verification workflow on one ore more QR-code​
+- Identify one (or more) business rule(s) to be exectued according to use case​
+- Optionally:​
+  - Retrieves business rule signing public key from PKD (either Local PKD or via Aggregating/ Federated PKD)​
+  - Verifies authenticity of business rule​
+- Map QR-code content into requiste FHIR resources using FHIR Structure Maps​
+- Execute CQL businns rule on FHIR resource content
+
+**OUT OF SCOPE:** consolidating business rules across trust network members​
