@@ -20,8 +20,8 @@ that supports syntax highlighting when writing CQL.
 ## CQL Structure
 
 CQL artifacts are organized around the concept of a library. A CQL library can be thought of as a
-container a specific instance of business logic. A CQL file begins with a declaration of the library
-name and version:
+container for a specific instance of business logic. A CQL file begins with a declaration of the
+library name and version:
 
 ```
 library DDCCPass version '1.0.0'
