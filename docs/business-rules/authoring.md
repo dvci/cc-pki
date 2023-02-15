@@ -8,30 +8,58 @@ CQL expresses the logic of business rules in a way that is both human readable a
 order for the logic to be computed against health credentials in a scalable and standardized way
 the logic must be written against a common standard format for representing the credentials.
 
-## Preqrequisites for authoring business rules using CQL
-FHIR models and value sets
-IDE (vscode extension)
+## Authoring Tools
 
-## CQL DSL
-CQL grammar links, llinks to existing repos with CQL examples for reference
+CQL can be authored using any text editor, however using an integrated development environment (IDE)
+that specifically supports CQL can streamline the experience. The
+[Visual Studio (VS) Code](https://code.visualstudio.com/)
+IDE has a
+[CQL extension](https://marketplace.visualstudio.com/items?itemName=jonnokc.clinical-quality-language)
+that supports syntax highlighting when writing CQL.
 
-## Packaging CQL for distribution
-FHIR library
+## CQL Structure
 
-The [DDCC Implementation Guide](https://worldhealthorganization.github.io/ddcc/) defines both the
-common standard representation against which the CQL can be written and the mappings for translating
-various source formats into the common representation. The source formats are
+CQL artifacts are organized around the concept of a library. A CQL library can be thought of as a
+container a specific instance of business logic. A CQL file begins with a declaration of the library
+name and version:
 
-* [SMART Health Cards: Vaccination & Testing (SMART Health Cards)](https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/)
-* [European Union Digital COVID Certificates (EUDCC)](https://health.ec.europa.eu/publications/technical-specifications-eu-digital-covid-certificates-volumes-1-5_en)
-* [International Civil Aviation Organization Visible Digital Seals (ICAO VDS-NC)](https://www.icao.int/Security/FAL/TRIP/PublishingImages/Pages/Publications/Guidelines%20-%20VDS%20for%20Travel-Related%20Public%20Health%20Proofs.pdf)
-* [Digital Infrastructure for Verifiable Open Credentialing (DIVOC)](https://divoc.egov.org.in/)
+```
+library DDCCPass version '1.0.0'
+```
 
-The common representation that these source health credential formats need to be transformed to
-before evaluating CQL business rules is the
-[World Health Organization Digital Documentation of COVID-19 Certificates (WHO DDCC)](https://worldhealthorganization.github.io/ddcc/content_profiles.html)
+Each CQL library operates against one or more specific data models. In the case of CQL intended to
+be run against DDCC health credentials the data model is FHIR, which can be specified with the
+`using` declaration:
 
-## FHIR Representation
+```
+using FHIR version '4.0.1'
+```
+
+CQL libraries can also contain terminology declarations, including codesystems and valuesets. These
+declarations allow the CQL to define a local name to represent a codesystem or valueset used in the
+CQL logic:
+
+```
+valueset "WHO Specimen Sample Origin": 'https://worldhealthorganization.github.io/ddcc/ValueSet-who-ddcc-sample-origin-covid-19.html'
+```
+
+The local name can then be used to reference the codesystem or valueset in the CQL:
+
+```
+define "ValidSampleOrigin": [Observation] O where O.method in "WHO Specimen Sample Origin"
+```
+
+The code systems and value sets referenced in DDCC health credentials can be found in the DDCC IG:
+
+* [DDCC IG Code Systems](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-code-systems)
+* [DDCC IG Value Sets](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-value-sets)
+
+Complete information on authoring CQL, including examples, can be found in the
+[CQL Authoring Guide](https://cql.hl7.org/02-authorsguide.html).
+Additional guidelines and best practices can be found in the
+[CRMI IG CQL Guidelines](https://build.fhir.org/ig/HL7/crmi-ig/branches/master/using-cql.html).
+
+## CQL for Health Credentials
 
 The WHO DDCC IG specifies health credentials using the FHIR standard, and the CQL for expressing
 business rules against credentials operates on the FHIR resources that make up a credential. The
@@ -43,13 +71,18 @@ resources representing information on vaccines administered and
 [Observation](https://worldhealthorganization.github.io/ddcc/StructureDefinition-DDCCObservation.html)
 resources representing test results.
 
-*QUESTIONS: DO WE WANT DIAGRAMS? DO WE WANT EXAMPLE FHIR CONTENT?*
-
 ![FHIR Representation Diagram](/img/fhir_representation.png)
 
-*NOTE: THIS DIAGRAM IS FROM WHO MATERIALS, WE SHOULD EITHER CONFIRM THAT WE CAN USE IT OR REPLACE IT OR REMOVE IT*
+## Packaging CQL for Distribution
 
-## Example
+CQL can be packaged for distribution in a [FHIR Library](https://hl7.org/fhir/library.html)
+resource, intended for describing and sharing knowledge artifacts like CQL. The
+[CRMI IG Packaging Guidelines](https://build.fhir.org/ig/HL7/cqf-measures/packaging.html)
+provide information on how CQL libraries should be packaged. Examples of CQL packaged in FHIR
+Libraries can be found in the
+[DDCC IG Knowledge Artifact Libraries](https://worldhealthorganization.github.io/ddcc/artifacts.html#knowledge-artifacts-libraries).
+
+## Example CQL
 
 The following example CQL shows a simple example of business rules applied to immunizations:
 
@@ -80,3 +113,4 @@ CQL authoring resources:
 * [CQL Introduction](https://cql.hl7.org/01-introduction.html)
 * [CQL Authoring Guide](https://cql.hl7.org/02-authorsguide.html)
 * [CRMI IG CQL Guidelines](https://build.fhir.org/ig/HL7/crmi-ig/branches/master/using-cql.html)
+* [CRMI IG Packaging Guidelines](https://build.fhir.org/ig/HL7/cqf-measures/packaging.html)

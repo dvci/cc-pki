@@ -31,6 +31,19 @@ The workflow for executing CQL against health credentials includes the following
 
 ## Structure Maps and Concept Maps
 
+The [DDCC Implementation Guide](https://worldhealthorganization.github.io/ddcc/) defines both the
+common standard representation against which the CQL can be written and the mappings for translating
+various source formats into the common representation. The source formats are
+
+* [SMART Health Cards: Vaccination & Testing (SMART Health Cards)](https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/)
+* [European Union Digital COVID Certificates (EUDCC)](https://health.ec.europa.eu/publications/technical-specifications-eu-digital-covid-certificates-volumes-1-5_en)
+* [International Civil Aviation Organization Visible Digital Seals (ICAO VDS-NC)](https://www.icao.int/Security/FAL/TRIP/PublishingImages/Pages/Publications/Guidelines%20-%20VDS%20for%20Travel-Related%20Public%20Health%20Proofs.pdf)
+* [Digital Infrastructure for Verifiable Open Credentialing (DIVOC)](https://divoc.egov.org.in/)
+
+The common representation that these source health credential formats need to be transformed to
+before evaluating CQL business rules is the
+[World Health Organization Digital Documentation of COVID-19 Certificates (WHO DDCC)](https://worldhealthorganization.github.io/ddcc/content_profiles.html)
+
 Translating across formats requires correctly mapping both the structure of the credential and the
 clinical concepts expressed within that structure.
 
