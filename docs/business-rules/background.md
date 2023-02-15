@@ -20,10 +20,13 @@ health domain business rules, as the computable representation of business rules
 health credentials in its Global Trust Network. CQL defines a human readable representation of logic
 that can be evaluated against clinical knowledge, including health credentials. CQL is a domain
 specific language intended to be usable by clinical domain experts to both author and read clinical
-expressions. Once CQL has been authored, running it against clinical knowledge first requires
-translating the CQL into its canonical representation, the Expression Logical Model (ELM). The
-resulting ELM expression of the CQL can be run against a DDCC health credential using a CQL
-execution engine.
+expressions, and does not require software development expertise. Once CQL has been authored,
+running it against clinical knowledge first requires translating the CQL into its canonical
+representation, the Expression Logical Model (ELM). The resulting ELM expression of the CQL can be
+run against a DDCC health credential using a CQL execution engine. The result can be packaged and
+shared, meaning that the execution of CQL does not require a central server and is platform
+independent. This ensures that the CQL can be run on health data without actually requiring personal
+health data to be shared.
 
 Health credentials can be specified using multiple standards. DDCC health credentials, which can be
 evaluated against CQL business rules, are specified using the
