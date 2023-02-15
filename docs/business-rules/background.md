@@ -68,3 +68,20 @@ and ConceptMaps defined in the DDCC Implementation Guide.
 1. **Execute CQL against the health credentials:** Once the credentials have been converted, the CQL
 can be run against them and a result determined. In this example the results would show whether or
 not the traveler meets the travel requirements.
+
+## Workflow
+
+The overall workflow for authoring CQL and executing it against health credentials looks as follows:
+
+* Author
+    * Write business rules using CQL to express health policies in computable fashion
+    * Publishes the CQL rules as FHIR Library resources with a trust health service
+    * Optionally digitally sign the business rule using a FHIR Provenance resource and provide public key to PKD
+* Verifier
+    * Perform Federated Verification workflow on health credential
+    * Identify business rule to be executed for use case
+    * Optionally retrieve public key signing business rule from PKD and verify authenticity of rule
+    * Map source health credential to FHIR resources using StructureMaps
+    * Execute CQL business rule on FHIR representation of credential
+
+![Workflow Diagram](/img/business_rules_workflow.png)

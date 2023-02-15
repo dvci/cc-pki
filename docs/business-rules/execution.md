@@ -4,30 +4,30 @@ sidebar_position: 3
 
 # CQL Execution
 
-# Prequisites for CQL execution
-Packaged FHIR library with CQL
-ELM translator
-CQL engine of choice with links to available engines
-FHIR terminology server in some cases
+Once CQL has been authored and packaged into a FHIR Library for distribution the CQL can be run in a
+CQL execution environment. Before being run, CQL must first be converted into its ELM representation
+using the
+[CQL-to-ELM Translator](https://github.com/cqframework/clinical_quality_language/blob/master/Src/java/cql-to-elm/OVERVIEW.md).
+This conversion can be accomplished using the
+[CQL to ELM Translation Service](https://github.com/cqframework/cql-translation-service),
+which is also available as a
+[docker image](https://hub.docker.com/r/cqframework/cql-translation-service).
+The resulting ELM can then be run in a CQL Execution Engine. Available CQL Execution Engines
+include:
 
-The workflow for executing CQL against health credentials includes the following:
+* [JavaScript CQL Execution Framework](https://github.com/cqframework/cql-execution)
+* [Java CQL Evaluation Engine](https://github.com/cqframework/cql-engine)
 
-* Author
-    * Write business rules using CQL to express health policies in computable fashion
-    * Publishes the CQL rules as FHIR Library resources with a trust health service
-    * Optionally digitally sign the business rule using a FHIR Provenance resource and provide public key to PKD
-* Verifier
-    * Perform Federated Verification workflow on health credential
-    * Identify business rule to be executed for use case
-    * Optionally retrieve public key signing business rule from PKD and verify authenticity of rule
-    * Map source health credential to FHIR resources using StructureMaps
-    * Execute CQL business rule on FHIR representation of credential
+There is also a [CQL Evaluator](https://github.com/cqframework/clinical-reasoning), which combines
+the CQL-to-ELM Translator with the Java CQL Evaluation Engine.
 
-*QUESTION: DO WE WANT DIAGRAMS?*
+## Terminology
 
-![Workflow Diagram](/img/business_rules_workflow.png)
-
-*NOTE: THIS DIAGRAM IS FROM WHO MATERIALS, WE SHOULD EITHER CONFIRM THAT WE CAN USE IT OR REPLACE IT OR REMOVE IT*
+Running CQL also requires the appropriate terminology references to be present. Running CQL in the
+Java CQL Evaluation Engine requires access to a
+[FHIR terminology server](http://hl7.org/fhir/R4/terminology-service.html).
+The JavaScript CQL Execution Framework, in addition to supporting the use of terminology servers,
+also allows terminology resources to be passed into the library at the time of execution.
 
 ## Structure Maps and Concept Maps
 
@@ -63,7 +63,13 @@ use SNOMED CT. Mapping the clinical concepts from one format to another is accom
 A ConceptMap defines a mapping from a set of concepts in one code system to concepts in another code
 system.
 
+Using the StructureMaps to translate formats requires a
+[mapping engine](https://confluence.hl7.org/display/FHIR/Using+the+FHIR+Mapping+Language#UsingtheFHIRMappingLanguage-MappingEngineImplementations).
+Note that using the Java mapping engine also requires the use of a terminology server; it uses
+[tx.fhir.org](tx.fhir.org) by default.
+
 References:
 
 * [DDCC IG Structure Maps](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-structure-maps)
 * [DDCC IG Concept Maps](https://worldhealthorganization.github.io/ddcc/artifacts.html#terminology-concept-maps)
+* [Mapping Engine Implementations](https://confluence.hl7.org/display/FHIR/Using+the+FHIR+Mapping+Language#UsingtheFHIRMappingLanguage-MappingEngineImplementations)
